@@ -5,6 +5,18 @@ const log = require('./log')
 const getPrivateToken = (opts = {}) => {
   return new Promise((resolve, reject) => {
     opts.domain = opts.domain || 'twitch.tv'
+    opts.timeout = opts.timeout || 15 * 1000
+
+    if (typeof opts.domain !== 'string') {
+      resolve({
+        error: 'The type of `domain` option should be `string`.'
+      })
+    }
+    if (typeof opts.timeout !== 'number') {
+      resolve({
+        error: 'The type of `timeout` option should be `number`.'
+      })
+    }
 
     // NOTE: Refer browser object here to use after the promise.
     let browser
@@ -45,11 +57,19 @@ const getPrivateToken = (opts = {}) => {
               }
             }
           })
-          .on('load', () => resolve({
-            error: 'There was no meaningful request to get private API token!'
-          }))
 
         page.goto('http://' + opts.domain)
+
+        // NOTE: Should use timer instead of `load` or `documentloaded` event of `playwright` because Twitch web app is React.JS app.
+        setTimeout(() => {
+          log('canceling the web browser because timeout reached')
+
+          browser
+            .close()
+            .then(() => resolve({
+              error: 'Timeout reached.'
+            }))
+        }, opts.timeout)
       })
   })
 }
