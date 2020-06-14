@@ -107,14 +107,13 @@ const {
 Get the private token(client id) from Twitch web app via playwright(web driver, see [microsoft/playwright](https://github.com/microsoft/playwright)).
 
 - arguments
-  - opts (optional)
+  - opts <Object> (optional)
     - domain <String>: `twitch.tv`
     - timeout <Number>: 15 * 1000
 - returns
-  - <Promise>
-    - <Object>
-      - clientID: <String> (optional)
-      - error: <Error> (optional)
+  - <Promise: Object>
+    - clientID: <String> (optional)
+    - error: <Error> (optional)
 
 ```js
 const {
