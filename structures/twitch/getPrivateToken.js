@@ -18,7 +18,7 @@ const getPrivateToken = (opts = {}) => {
       })
     }
 
-    // NOTE: Refer browser object here to use after the promise.
+    // NOTE: Referer of browser object here to use after the promise.
     let browser
 
     log('getting latest private token from twitch api')
