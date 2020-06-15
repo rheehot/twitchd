@@ -31,6 +31,17 @@ const getPrivateToken = (opts = {}) => {
       })
       .then(context => context.newPage())
       .then(page => {
+        // NOTE: Should use timer instead of `load` or `documentloaded` event of `playwright` because Twitch web app is React.JS app.
+        const timer = setTimeout(() => {
+          log('canceling the web browser because timeout reached')
+
+          browser
+            .close()
+            .then(() => resolve({
+              error: 'Timeout reached.'
+            }))
+        }, opts.timeout)
+
         page
           .on('request', request => {
             // NOTE: `\w{4,25}` is the format of Twitch username.
@@ -50,6 +61,8 @@ const getPrivateToken = (opts = {}) => {
 
                   log('got private token from twitch api request: ' + clientID)
 
+                  clearInterval(timer)
+
                   browser
                     .close()
                     .then(() => resolve({ clientID }))
@@ -59,17 +72,6 @@ const getPrivateToken = (opts = {}) => {
           })
 
         page.goto('http://' + opts.domain)
-
-        // NOTE: Should use timer instead of `load` or `documentloaded` event of `playwright` because Twitch web app is React.JS app.
-        setTimeout(() => {
-          log('canceling the web browser because timeout reached')
-
-          browser
-            .close()
-            .then(() => resolve({
-              error: 'Timeout reached.'
-            }))
-        }, opts.timeout)
       })
   })
 }

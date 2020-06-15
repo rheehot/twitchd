@@ -55,6 +55,8 @@ query {
   })
   const { data } = await response.json()
 
+  log('got the metadata of user: ' + opts.username)
+
   if (!data.user) {
     log(`the user '${opts.username}' seems not exists on Twitch`)
   }

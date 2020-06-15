@@ -14,7 +14,9 @@ The archiving system for Twitch broadcasts.
 
 # Todo
 
-- [x] Twitch private client ID: Getting Twitch private API token(id) via web driver.
+- [x] Twitch private client ID: get Twitch private API token(id) via web driver.
+- [x] Twitch channel status: get Twitch channel status via API.
+- [ ] Twitch stream m3u8: get the metadata of the channel streams.
 
 # Development
 
