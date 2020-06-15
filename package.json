@@ -19,6 +19,7 @@
   "dependencies": {
     "cross-env": "^7.0.2",
     "debug": "^4.1.1",
+    "node-fetch": "^2.6.0",
     "playwright": "^1.1.1"
   }
 }

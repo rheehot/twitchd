@@ -144,6 +144,49 @@ React.JS as front-end library which builds the website via JavaScript, we cannot
 Also, about `load` event, since Twitch is streaming website, the request will be created continuously unless we close the tab.
 So, instead of using event listeners, I have decided to use timer.
 
+### structures/twitch/getChannelStatus
+
+Get the status of the channel including stream information via Twitch GQL api.
+
+- arguments
+  - opts \<Object\>
+    - gqlURL \<String\>: `https://gql.twitch.tv/gql` (optional)
+    - username \<String\>
+    - clientID \<String\>
+- returns
+  - \<Promise: Object\>
+    - data \<Object\>
+      - user \<Object\> (optional)
+        - stream \<Object\> (optional)
+
+If you want to see the what actually you can get, please refer the Graph QL query in the source code.
+
+```js
+const {
+  twitch: {
+    getChannelStatus
+  }
+} = require('Seia-Soto/twitchArc/structures')
+
+getChannelStatus({ clientID: 'kimne78kx3ncx6brgo4mv6wki5h1ko', username: 'fluentAroma' })
+  .then(data => console.log(data))
+```
+
+#### Notes
+
+- About Twitch unofficial GQL API.
+
+You may find the `/gql` XHR requests in the network tab of the web browser developer tools.
+Yes, it is Graph QL API endpoint of Twitch.
+The official GQL API of Twitch was not introduced in public, so I used some awesome tools to build the query. (The current query content is from the following repository because I googled about it after the discovery: [mauricew/twitch-graphql-api](https://github.com/mauricew/twitch-graphql-api))
+To dig additional information of the private GQL API of Twitch, I used [Insomnia REST API Client](https://insomnia.rest/) which is really powerful and easy to use.
+The Insomnia recognized the GQL API endpoint and automatically crawled the documentation for me.
+Isn't it really comfortable even this is included in official GQL specification?
+
+- Check the status of user.
+
+If you want to check if the user is exists and is streaming, just `null` check the returning payload.
+
 # License
 
 If you want, please refer this repository in your project :>
