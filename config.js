@@ -7,7 +7,7 @@ module.exports = {
   },
   arc: {
     intervals: {
-      token: 1000 * 10 * 60,
+      token: 1000 * 15 * 60,
       status: 1000 * 30
     },
     users: []

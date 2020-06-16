@@ -16,6 +16,7 @@ The archiving system for Twitch broadcasts.
 
 - [x] Twitch private client ID: get Twitch private API token(id) via web driver.
 - [x] Twitch channel status: get Twitch channel status via API.
+- [x] Twitch accesstoken: get Twitch accesstoken via API.
 - [ ] Twitch stream m3u8: get the metadata of the channel streams.
 
 # Development
@@ -196,6 +197,50 @@ Isn't it really comfortable even this is included in official GQL specification?
 - Check the status of user.
 
 If you want to check if the user is exists and is streaming, just `null` check the returning payload.
+
+### structures/twitch/getAccessToken
+
+Get the accesstoken via the official Twitch API and client ID.
+
+- arguments
+  - opts \<Object\>
+    - apiURL \<String\>: `https://api.twitch.tv` (optional)
+    - username \<String\>
+    - clientID \<String\>
+    - clientOpts \<Object\> (optional)
+      - oauth_token \<String\>:
+      - need_https \<Boolean\>: true
+      - platform \<String\>: _
+      - player_type \<String\>: site
+      - player_backend \<String\>: mediaplayer
+- returns
+  - \<Promise: Object\>
+    - sig \<String\>
+    - token \<String\>
+    - mobile_restricted \<Boolean\>
+    - expires_at \<String: datetime\>
+
+```js
+const {
+  twitch: {
+    getAccessToken
+  }
+} = require('Seia-Soto/twitchArc/structures')
+
+getAccessToken({ clientID: 'kimne78kx3ncx6brgo4mv6wki5h1ko', username: 'fluentAroma' })
+  .then(data => console.log(data))
+```
+
+#### Notes
+
+- Getting private accesstoken.
+
+To access the contents of the live stream or the channel, the accesstoken is required.
+In this project, I have coded the logic to dig the Twitch's official client ID for the web application.
+So, in this logic, I have decided to use the client ID from the Twitch.
+Also, Twitch won't allow you to save the content of the live stream, so you have to use the Twitch's private client ID for it.
+
+> TODO: Add more information about the accesstoken output data.
 
 # License
 
