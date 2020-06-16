@@ -154,7 +154,9 @@ module.exports = class TwitchArc {
             width: data.user.stream.width,
             clipCount: data.user.stream.clipCount,
             viewersCount: data.user.stream.viewersCount,
+            previewImageURL: data.user.stream.previewImageURL,
             isPartner: data.user.stream.isPartner,
+            isStreamDropsEnabled: data.user.stream.isStreamDropsEnabled,
             updatedAt: new Date()
           })
       } else {

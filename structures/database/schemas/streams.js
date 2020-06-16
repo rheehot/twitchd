@@ -15,7 +15,9 @@ module.exports = async knex => {
     table.integer('width', 11)
     table.integer('clipCount', 11)
     table.integer('viewersCount', 11)
+    table.string('previewImageURL', 2048)
     table.boolean('isPartner')
+    table.boolean('isStreamDropsEnabled')
     table.datetime('updatedAt')
 
     return table

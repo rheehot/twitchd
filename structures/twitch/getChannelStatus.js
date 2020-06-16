@@ -21,42 +21,47 @@ const getChannelStatus = async (opts = {}) => {
   log(`getting the status of the '${opts.username}' channel via Twitch GQL api`)
 
   const query = `
-  query {
-    user(login: "${opts.username}") {
+query {
+  user(login: "${opts.username}") {
+    id
+    login
+    displayName
+    description
+    createdAt
+    offlineImageURL
+    profileImageURL(width: 600)
+    profileViewCount
+    hasPrime
+    hasTurbo
+    updatedAt
+    activity {
+      type
+    }
+    roles {
+      isPartner
+    }
+    stream {
       id
-      login
-      displayName
-      description
+      title
+      type
+      viewersCount
       createdAt
-      offlineImageURL
-      profileImageURL(width: 600)
-      profileViewCount
-      hasPrime
-      hasTurbo
-      updatedAt
-      roles {
-        isPartner
-      }
-      stream {
-        id
-        title
-        type
-        viewersCount
-        createdAt
-        averageFPS
-        bitrate
-        broadcasterSoftware
-        codec
-        height
-        width
-        clipCount
-        isPartner
-        game {
-          name
-        }
+      averageFPS
+      bitrate
+      broadcasterSoftware
+      codec
+      height
+      width
+      clipCount
+      previewImageURL(width: 1920, height: 1080)
+      isPartner
+      isStreamDropsEnabled
+      game {
+        name
       }
     }
   }
+}
 `
 
   const response = await fetch(opts.gqlURL, {
