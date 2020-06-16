@@ -66,9 +66,17 @@ Instead of, I included `.test.js` files to see how the specific function works.
 
 # Usage
 
-There is no available executable command to this repository. Actually, scripts won't work yet because this application is not completed and won't work.
-
 - If you want to use specific function of this application, you can install this repository into your project instead. See [API](#api) section.
+
+## `yarn start`
+
+- Environments
+  - DEBUG: twitchArc*
+
+## `yarn debug`
+
+- Environments
+  - DEBUG: *
 
 # API
 

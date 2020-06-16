@@ -26,10 +26,10 @@ module.exports = class TwitchArc {
       const username = this.opts.arc.users[i]
 
       if (username) {
-        utils.createIntervalTask({
+        setTimeout(() => utils.createIntervalTask({
           function: () => this.updateUser(username),
           time: this.opts.arc.intervals.status
-        })
+        }), i * 250)
       }
     }
   }
@@ -49,7 +49,8 @@ module.exports = class TwitchArc {
       .insert({
         action: actions.TOKEN_UPDATE,
         from: 'system',
-        ref: clientID
+        ref: clientID,
+        createdAt: new Date()
       })
 
     this.token = clientID
@@ -81,12 +82,27 @@ module.exports = class TwitchArc {
       }
 
       await database.knex('users')[method]({
+        username,
+        userId: data.user.id,
         displayName: data.user.displayName,
         description: data.user.description,
+        offlineImageURL: data.user.offlineImageURL,
+        profileImageURL: data.user.profileImageURL,
+        profileViewCount: data.user.profileViewCount,
+        hasPrime: data.user.hasPrime,
+        hasTurbo: data.user.hasTurbo,
+        isPartner: data.user.roles.isPartner,
         createdAt: data.user.createdAt,
-        isPartner: data.user.roles.isPartner
+        updatedAt: data.user.updatedAt
       })
-        .where({ username })
+        .where({ userId: data.user.id })
+      await database.knex('events')
+        .insert({
+          action: actions.USER_UPDATE,
+          from: 'system',
+          ref: data.user.id,
+          createdAt: new Date()
+        })
 
       // NOTE: If user is live now:
       if (data.user.stream) {
@@ -125,11 +141,20 @@ module.exports = class TwitchArc {
         await database.knex('streams')
           .insert({
             username,
+            userId: data.user.id,
             streamId: data.user.stream.id,
             title: data.user.stream.title,
             type: data.user.stream.type,
             game: data.user.stream.game.name,
+            averageFps: data.user.stream.averageFPS,
+            bitrate: data.user.stream.bitrate,
+            broadcasterSoftware: data.user.stream.broadcasterSoftware,
+            codec: data.user.stream.codec,
+            height: data.user.stream.height,
+            width: data.user.stream.width,
+            clipCount: data.user.stream.clipCount,
             viewersCount: data.user.stream.viewersCount,
+            isPartner: data.user.stream.isPartner,
             updatedAt: new Date()
           })
       } else {
