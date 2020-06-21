@@ -1,3 +1,5 @@
+module.exports.getAccessToken = require('./getAccessToken')
+module.exports.getChannelM3U8 = require('./getChannelM3U8')
 module.exports.getChannelStatus = require('./getChannelStatus')
 module.exports.getPrivateToken = require('./getPrivateToken')
 module.exports.log = require('./log')

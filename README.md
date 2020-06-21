@@ -1,12 +1,13 @@
 # Seia-Soto/twitchArc
 
-The archiving system for Twitch broadcasts.
+The unofficial Twitch API wrapper using private APIs at the time.
+
+> This project was changed to Twitch API wrapper.
 
 ## Table of Contents
 
 - [Todo](#todo)
 - [Development](#development)
-- [Usage](#usage)
 - [API](#api)
 - [License](#license)
 
@@ -17,7 +18,8 @@ The archiving system for Twitch broadcasts.
 - [x] Twitch private client ID: get Twitch private API token(id) via web driver.
 - [x] Twitch channel status: get Twitch channel status via API.
 - [x] Twitch accesstoken: get Twitch accesstoken via API.
-- [ ] Twitch stream m3u8: get the metadata of the channel streams.
+- [x] Twitch stream m3u8: get the metadata of the channel streams.
+- [ ] Twitch stream m3u8 for specific qualify: automatically parse the related m3u8 playlists.
 
 # Development
 
@@ -64,20 +66,6 @@ First of all, I don't use any testing utility as you can see.
 Instead of, I included `.test.js` files to see how the specific function works.
 
 - Also, I don't prefer TypeScript. Personally, use [deepscan.io](https://deepscan.io) to inspect the bugs at the development time.
-
-# Usage
-
-- If you want to use specific function of this application, you can install this repository into your project instead. See [API](#api) section.
-
-## `yarn start`
-
-- Environments
-  - DEBUG: twitchArc*
-
-## `yarn debug`
-
-- Environments
-  - DEBUG: *
 
 # API
 
@@ -241,6 +229,55 @@ So, in this logic, I have decided to use the client ID from the Twitch.
 Also, Twitch won't allow you to save the content of the live stream, so you have to use the Twitch's private client ID for it.
 
 > TODO: Add more information about the accesstoken output data.
+
+### structures/twitch/getChannelM3U8
+
+Get the m3u8 playlists from the specific channel.
+
+- arguments
+  - apiURL \<String\>: `https://usher.ttvnw.net` (optional)
+  - username \<String\>
+  - token \<String\>
+  - sig \<String\>
+  - clientOpts \<Object\> (optional)
+    - allow_source \<Boolean\>: `true`
+    - fast_bread \<Boolean\> : `true`
+    - player_backend \<String\>: `mediaplayer`
+    - playlist_include_framerate \<Boolean\>: `true`
+    - reassignments_supported \<Boolean\>: `true`
+    - supported_codecs \<String\>: `avc1`
+    - cdm \<String\>: `wv`
+- returns
+  - \<Promise: String\>
+
+```js
+const {
+  twitch: {
+    getAccessToken,
+    getChannelM3U8
+  }
+} = require('Seia-Soto/twitchArc/structures')
+
+const username = 'fluentAroma'
+
+getAccessToken({ clientID: 'kimne78kx3ncx6brgo4mv6wki5h1ko', username })
+  .then(data => data)
+  .then(({ sig, token }) => getChannelM3U8({
+    username,
+    token,
+    sig
+  }))
+  .then(m3u8 => console.log(m3u8))
+```
+
+#### Notes
+
+- What is fast_bread mode?
+
+When you're watch Twitch, if you want to reduce the delay between the streamer, you can enable fast bread mode for fast update of each part of stream output in `ts` file.
+However, these fast bread mode highly depends on your network status and the output video can be corrupted if your network is too weak to handle the multiple stream downloads.
+
+> TODO: Add logic to parse m3u8 directly.
 
 # License
 
