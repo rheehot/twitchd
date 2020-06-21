@@ -1,3 +1,3 @@
-const createLogger = require('../createLogger')
+const { createLogger } = require('../utils')
 
 module.exports = createLogger('twitch')

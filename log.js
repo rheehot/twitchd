@@ -1,3 +1,3 @@
-const { createLogger } = require('./structures')
+const { createLogger } = require('./structures/utils')
 
 module.exports = createLogger()
