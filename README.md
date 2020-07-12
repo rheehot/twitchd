@@ -1,4 +1,4 @@
-# Seia-Soto/twitchArc
+# Seia-Soto/twitchd
 
 The unofficial Twitch API wrapper using private APIs at the time.
 
@@ -19,7 +19,7 @@ The unofficial Twitch API wrapper using private APIs at the time.
 - [x] Twitch channel status: get Twitch channel status via API.
 - [x] Twitch accesstoken: get Twitch accesstoken via API.
 - [x] Twitch stream m3u8: get the metadata of the channel streams.
-- [ ] Twitch stream m3u8 for specific qualify: automatically parse the related m3u8 playlists.
+- [x] Twitch stream m3u8 for specific qualify: automatically parse the related m3u8 playlists.
 
 # Development
 
@@ -76,13 +76,13 @@ If you want to use this application as module, you can hack it via installing fr
 You can install this package via Yarnpkg.
 
 ```bash
-yarn add https://github.com/Seia-Soto/twitchArc
+yarn add https://github.com/Seia-Soto/twitchd
 ```
 
 If you want to use NPM.
 
 ```bash
-npm i Seia-Soto/twitchArc
+npm i Seia-Soto/twitchd
 ```
 
 ### Accessing the specific function
@@ -96,7 +96,7 @@ const {
   twitch: {
     getPrivateToken
   }
-} = require('Seia-Soto/twitchArc/structures')
+} = require('Seia-Soto/twitchd/structures')
 ```
 
 ## Documentation
@@ -119,7 +119,7 @@ const {
   twitch: {
     getPrivateToken
   }
-} = require('Seia-Soto/twitchArc/structures')
+} = require('Seia-Soto/twitchd/structures')
 
 getPrivateToken()
   .then(({ clientID = 'No client ID detected!' }) => console.log(clientID))
@@ -164,7 +164,7 @@ const {
   twitch: {
     getChannelStatus
   }
-} = require('Seia-Soto/twitchArc/structures')
+} = require('Seia-Soto/twitchd/structures')
 
 getChannelStatus({ clientID: 'kimne78kx3ncx6brgo4mv6wki5h1ko', username: 'fluentAroma' })
   .then(data => console.log(data))
@@ -212,7 +212,7 @@ const {
   twitch: {
     getAccessToken
   }
-} = require('Seia-Soto/twitchArc/structures')
+} = require('Seia-Soto/twitchd/structures')
 
 getAccessToken({ clientID: 'kimne78kx3ncx6brgo4mv6wki5h1ko', username: 'fluentAroma' })
   .then(data => console.log(data))
@@ -268,7 +268,7 @@ const {
     getAccessToken,
     getChannelM3U8
   }
-} = require('Seia-Soto/twitchArc/structures')
+} = require('Seia-Soto/twitchd/structures')
 
 const username = 'fluentAroma'
 

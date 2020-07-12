@@ -1,4 +1,4 @@
-process.env.DEBUG = 'twitchArc*'
+process.env.DEBUG = 'twitchd*'
 
 const getAccessToken = require('./getAccessToken')
 
