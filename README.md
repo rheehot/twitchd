@@ -239,6 +239,7 @@ Get the m3u8 playlists from the specific channel.
   - username \<String\>
   - token \<String\>
   - sig \<String\>
+  - videoQuality \<String\> (optional)
   - clientOpts \<Object\> (optional)
     - allow_source \<Boolean\>: `true`
     - fast_bread \<Boolean\> : `true`
@@ -247,8 +248,20 @@ Get the m3u8 playlists from the specific channel.
     - reassignments_supported \<Boolean\>: `true`
     - supported_codecs \<String\>: `avc1`
     - cdm \<String\>: `wv`
+  - raw \<Any(Boolean)\>
 - returns
-  - \<Promise: String\>
+  - \<Promise: Object\>
+    - playlists \<Object\>
+      - [videoQualityInString: `chunked`] \<Object\>
+        - allowCache \<Boolean\>: `true`
+        - discontinuityStarts \<Array\>
+        - segments \<Array\>
+        - targetDuration \<Number\>
+        - mediaSequence \<Number\>
+        - dateTimeString \<String\>
+        - dateTimeObject \<Datetime\>
+        - discontinuitySequence \<Number\>: `0`
+      - raw \<Object: M3U8Parser.manifest\>
 
 ```js
 const {
@@ -276,8 +289,6 @@ getAccessToken({ clientID: 'kimne78kx3ncx6brgo4mv6wki5h1ko', username })
 
 When you're watch Twitch, if you want to reduce the delay between the streamer, you can enable fast bread mode for fast update of each part of stream output in `ts` file.
 However, these fast bread mode highly depends on your network status and the output video can be corrupted if your network is too weak to handle the multiple stream downloads.
-
-> TODO: Add logic to parse m3u8 directly.
 
 # License
 

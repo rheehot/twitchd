@@ -1,4 +1,5 @@
 const fetch = require('node-fetch')
+const { Parser: M3U8Parser } = require('m3u8-parser')
 
 const { createUrlencodeQuery } = require('../utils')
 const log = require('./log')
@@ -8,6 +9,7 @@ const getChannelM3U8 = async (opts = {}) => {
   opts.username = opts.username || ''
   opts.token = opts.token || ''
   opts.sig = opts.sig || ''
+  opts.videoQuality = opts.videoQuality || []
   opts.clientOpts = opts.clientOpts || {
     allow_source: true,
     fast_bread: false,
@@ -59,7 +61,54 @@ const getChannelM3U8 = async (opts = {}) => {
 
   log('got the m3u8 playlist from channel: ' + opts.username)
 
-  return data
+  if (opts.raw) {
+    return data
+  }
+
+  const parser = new M3U8Parser()
+
+  parser.push(data)
+  parser.end()
+
+  const manifest = parser.manifest
+  const results = {
+    playlists: {},
+    raw: manifest
+  }
+
+  if (opts.videoQuality && opts.videoQuality.length) {
+    if (typeof opts.videoQuality === 'string') {
+      opts.videoQuality = [opts.videoQuality]
+    }
+  } else {
+    opts.videoQuality = [
+      'chunked',
+      '720p60',
+      '720p30',
+      '480p30',
+      '360p30',
+      '160p30'
+    ]
+  }
+
+  for (let i = 0, l = opts.videoQuality.length; i < l; i++) {
+    const playlist = manifest.playlists[i]
+
+    if (opts.videoQuality.indexOf(playlist.attributes.VIDEO) === -1) {
+      return
+    }
+
+    const playlistResponse = await fetch(playlist.uri)
+    const playlistData = await playlistResponse.text()
+    const playlistParser = new M3U8Parser()
+
+    playlistParser.push(playlistData)
+    playlistParser.end()
+
+    results.playlists[playlist.attributes.VIDEO] = playlistParser.manifest
+  }
+
+  return results
 }
 
 module.exports = getChannelM3U8

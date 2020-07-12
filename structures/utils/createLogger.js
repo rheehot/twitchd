@@ -1,6 +1,6 @@
 const debug = require('debug')
 
-const pkg = require('../package')
+const pkg = require('../../package')
 
 module.exports = (name = '') => {
   const subseq = name.length
