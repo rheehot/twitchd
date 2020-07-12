@@ -154,9 +154,8 @@ Get the status of the channel including stream information via Twitch GQL api.
     - clientID \<String\>
 - returns
   - \<Promise: Object\>
-    - data \<Object\>
-      - user \<Object\> (optional)
-        - stream \<Object\> (optional)
+    - user \<Object\> (optional)
+      - stream \<Object\> (optional)
 
 If you want to see the what actually you can get, please refer the Graph QL query in the source code.
 

@@ -83,9 +83,7 @@ query {
     log(`the user '${opts.username}' seems not streaming live on Twitch`)
   }
 
-  return {
-    data
-  }
+  return data
 }
 
 module.exports = getChannelStatus
